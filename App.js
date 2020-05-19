@@ -1,113 +1,72 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, Image, ScrollView, Text} from 'react-native';
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import Header from './components/Header';
+import Formulario from './components/Formulario';
+import Cotizacion from './components/Cotizacion';
+import axios from 'axios';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const App = () => {
+  const [moneda, guardarMoneda] = useState('');
+  const [criptomoneda, guardarCriptoMoneda] = useState('');
+  const [consultarAPI, guardarConsultarAPI] = useState(false);
+  const [resultado, guardarResultado] = useState({});
 
-const App: () => React$Node = () => {
+  useEffect(() => {
+    const cotizarCriptomoneda = async () => {
+      if (consultarAPI) {
+        const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomoneda}&tsyms=${moneda}`;
+
+        const resultado = await axios.get(url);
+
+        guardarResultado(resultado.data.DISPLAY[criptomoneda][moneda]);
+
+        guardarConsultarAPI(false);
+      }
+    };
+    cotizarCriptomoneda();
+  }, [consultarAPI, criptomoneda, moneda]);
+
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      <ScrollView style={styles.home}>
+        <Header />
+        <Image
+          style={styles.headerImage}
+          source={require('./assets/img/bitcoin.jpeg')}
+        />
+        <Formulario
+          moneda={moneda}
+          guardarMoneda={guardarMoneda}
+          criptomoneda={criptomoneda}
+          guardarCriptoMoneda={guardarCriptoMoneda}
+          guardarConsultarAPI={guardarConsultarAPI}
+        />
+        <Cotizacion
+          resultado={resultado}
+          moneda={moneda}
+          criptomoneda={criptomoneda}
+        />
+        <Text style={styles.sign}>Powered by Paula Romero ♥️ </Text>
+      </ScrollView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  home: {
+    backgroundColor: 'rgb(0,14,42)',
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  headerImage: {
+    width: '100%',
+    height: 250,
   },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
+  sign: {
     fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
+    fontFamily: 'Lato-Regular',
+    color: 'rgb(200,250,255)',
+    marginBottom: 20,
+    textAlign: 'center',
   },
 });
 
