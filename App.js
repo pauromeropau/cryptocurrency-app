@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Image, ScrollView, Text} from 'react-native';
+import {
+  StyleSheet,
+  Image,
+  ScrollView,
+  Text,
+  ActivityIndicator,
+  View,
+} from 'react-native';
 
 import Header from './components/Header';
 import Formulario from './components/Formulario';
@@ -11,6 +18,7 @@ const App = () => {
   const [criptomoneda, guardarCriptoMoneda] = useState('');
   const [consultarAPI, guardarConsultarAPI] = useState(false);
   const [resultado, guardarResultado] = useState({});
+  const [cargando, guardarCargando] = useState(false);
 
   useEffect(() => {
     const cotizarCriptomoneda = async () => {
@@ -19,13 +27,31 @@ const App = () => {
 
         const resultado = await axios.get(url);
 
-        guardarResultado(resultado.data.DISPLAY[criptomoneda][moneda]);
+        guardarCargando(true);
 
-        guardarConsultarAPI(false);
+        //hide loading and show result
+        setTimeout(() => {
+          guardarResultado(resultado.data.DISPLAY[criptomoneda][moneda]);
+          guardarConsultarAPI(false);
+          guardarCargando(false);
+        }, 1000);
       }
     };
+
     cotizarCriptomoneda();
   }, [consultarAPI, criptomoneda, moneda]);
+
+  //show loading or result
+
+  const componente = cargando ? (
+    <ActivityIndicator size="large" color="rgb(200,250,255)" />
+  ) : (
+    <Cotizacion
+      resultado={resultado}
+      moneda={moneda}
+      criptomoneda={criptomoneda}
+    />
+  );
 
   return (
     <>
@@ -42,12 +68,7 @@ const App = () => {
           guardarCriptoMoneda={guardarCriptoMoneda}
           guardarConsultarAPI={guardarConsultarAPI}
         />
-        <Cotizacion
-          resultado={resultado}
-          moneda={moneda}
-          criptomoneda={criptomoneda}
-        />
-        <Text style={styles.sign}>Powered by Paula Romero ♥️ </Text>
+        <View style={styles.spinner}>{componente}</View>
       </ScrollView>
     </>
   );
@@ -67,6 +88,9 @@ const styles = StyleSheet.create({
     color: 'rgb(200,250,255)',
     marginBottom: 20,
     textAlign: 'center',
+  },
+  spinner: {
+    marginTop: 10,
   },
 });
 

@@ -2,18 +2,27 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
 const Cotizacion = ({resultado, moneda, criptomoneda}) => {
-  return (
-    <View style={styles.converted}>
-      <Text style={styles.convertedTextLabelTitle}>
-        {moneda} - {criptomoneda}
-      </Text>
-      <Text style={styles.convertedText}>1 {criptomoneda}</Text>
-      <Text style={styles.convertedTextLabel}>Price</Text>
-      <Text style={styles.convertedText}>{resultado.PRICE}</Text>
-      <Text style={styles.convertedTextLabel}>Last update</Text>
-      <Text style={styles.convertedText}>{resultado.LASTUPDATE}</Text>
-    </View>
-  );
+  if (Object.keys(resultado).length != 0 ) {
+    return (
+      <View style={styles.converted}>
+        <Text style={styles.convertedTextLabelTitle}>
+          {moneda} - {criptomoneda}
+        </Text>
+        <Text style={styles.convertedText}>1 {criptomoneda}</Text>
+        <Text style={styles.convertedTextLabel}>Price</Text>
+        <Text style={styles.convertedText}>{resultado.PRICE}</Text>
+        <Text style={styles.convertedTextLabel}>Highest Price Today</Text>
+        <Text style={styles.convertedText}>{resultado.HIGHDAY}</Text>
+        <Text style={styles.convertedTextLabel}>Lowest Price Today</Text>
+        <Text style={styles.convertedText}>{resultado.LOWDAY}</Text>
+        <Text style={styles.convertedTextLabel}>Variation Last 24 Hours</Text>
+        <Text style={styles.convertedText}>{resultado.CHANGEPCT24HOUR} %</Text>
+        <Text style={styles.convertedTextLabel}>Last Update</Text>
+        <Text style={styles.convertedText}>{resultado.LASTUPDATE}</Text>
+      </View>
+    );
+  }
+  return null;
 };
 
 const styles = StyleSheet.create({

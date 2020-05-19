@@ -47,7 +47,7 @@ const Formulario = ({
   return (
     <View style={styles.formContainer}>
       <View style={styles.pickerContainer}>
-        <Text style={styles.formTitle}>Coin</Text>
+        <Text style={styles.formTitle}>Currency</Text>
         <Picker
           style={styles.picker}
           onValueChange={moneda => obtenerMoneda(moneda)}
@@ -129,9 +129,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   picker: {
-    width: '90%',
+    width: '60%',
     margin: 10,
     height: 200,
+
   },
   pickerContainer: {
     backgroundColor: 'rgba(255,255,255,0.03)',
