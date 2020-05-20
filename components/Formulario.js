@@ -45,14 +45,17 @@ const Formulario = ({
   };
 
   return (
-    <View style={styles.formContainer}>
+    <>
       <View style={styles.pickerContainer}>
-        <Text style={styles.formTitle}>Currency</Text>
         <Picker
           style={styles.picker}
           onValueChange={moneda => obtenerMoneda(moneda)}
           selectedValue={moneda}>
-          <Picker.Item label="- Select -" value=" " color="rgb(200,250,255)" />
+          <Picker.Item
+            label="- Select currency -"
+            value=" "
+            color="rgb(200,250,255)"
+          />
           <Picker.Item
             label="AUD - Australian Dollar"
             value="AUD"
@@ -91,12 +94,15 @@ const Formulario = ({
         </Picker>
       </View>
       <View style={styles.pickerContainer}>
-        <Text style={styles.formTitle}>Crypto</Text>
         <Picker
           style={styles.picker}
           onValueChange={cripto => obtenerCriptomoneda(cripto)}
           selectedValue={criptomoneda}>
-          <Picker.Item label="- Select -" value=" " color="rgb(200,250,255)" />
+          <Picker.Item
+            label="- Select cryptocurrency -"
+            value=" "
+            color="rgb(200,250,255)"
+          />
 
           {criptomonedas.map(cripto => (
             <Picker.Item
@@ -109,11 +115,14 @@ const Formulario = ({
         </Picker>
       </View>
       <View style={styles.btnConvertContainer}>
-        <TouchableHighlight style={styles.btnConvert} onPress={cotizarPrecio}>
+        <TouchableHighlight
+          style={styles.btnConvert}
+          onPress={cotizarPrecio}
+          underlayColor={'rgb(153,250,255)'}>
           <Text style={styles.btnConvertText}>Convert</Text>
         </TouchableHighlight>
       </View>
-    </View>
+    </>
   );
 };
 
@@ -130,9 +139,9 @@ const styles = StyleSheet.create({
   },
   picker: {
     width: '60%',
-    margin: 10,
-    height: 200,
-
+    height: 180,
+    marginTop: 10,
+    marginBottom: 20,
   },
   pickerContainer: {
     backgroundColor: 'rgba(255,255,255,0.03)',

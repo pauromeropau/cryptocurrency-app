@@ -11,11 +11,11 @@ const Cotizacion = ({resultado, moneda, criptomoneda}) => {
         <Text style={styles.convertedText}>1 {criptomoneda}</Text>
         <Text style={styles.convertedTextLabel}>Price</Text>
         <Text style={styles.convertedText}>{resultado.PRICE}</Text>
-        <Text style={styles.convertedTextLabel}>Highest Price Today</Text>
+        <Text style={styles.convertedTextLabel}>Highest Today</Text>
         <Text style={styles.convertedText}>{resultado.HIGHDAY}</Text>
-        <Text style={styles.convertedTextLabel}>Lowest Price Today</Text>
+        <Text style={styles.convertedTextLabel}>Lowest Today</Text>
         <Text style={styles.convertedText}>{resultado.LOWDAY}</Text>
-        <Text style={styles.convertedTextLabel}>Variation Last 24 Hours</Text>
+        <Text style={styles.convertedTextLabel}>24H Change</Text>
         <Text style={styles.convertedText}>{resultado.CHANGEPCT24HOUR} %</Text>
         <Text style={styles.convertedTextLabel}>Last Update</Text>
         <Text style={styles.convertedText}>{resultado.LASTUPDATE}</Text>

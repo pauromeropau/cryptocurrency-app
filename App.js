@@ -3,7 +3,7 @@ import {
   StyleSheet,
   Image,
   ScrollView,
-  Text,
+
   ActivityIndicator,
   View,
 } from 'react-native';
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   headerImage: {
     width: '100%',
-    height: 250,
+    height: 230,
   },
   sign: {
     fontSize: 12,
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   spinner: {
-    marginTop: 10,
+    marginTop: 5,
   },
 });
 
